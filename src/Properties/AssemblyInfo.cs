@@ -40,3 +40,4 @@ using System.Resources;
 //      Revision
 //
 [assembly: AssemblyVersion("24.10.0.0")]
+[assembly: InternalsVisibleTo("Franca2")]
