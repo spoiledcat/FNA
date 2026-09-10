@@ -207,7 +207,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				h,
 				level,
 				handle.AddrOfPinnedObject() + startIndex * elementSize,
-				elementCount * elementSize
+				availableBytes
 			);
 			handle.Free();
 		}
@@ -238,6 +238,18 @@ namespace Microsoft.Xna.Framework.Graphics
 				w = Math.Max(Width >> level, 1);
 				h = Math.Max(Height >> level, 1);
 			}
+
+#if DEBUG
+			int requiredBytes = (w * h * GetFormatSizeEXT(Format)) / GetBlockSizeSquaredEXT(Format);
+			if (dataLength > requiredBytes)
+			{
+				throw new ArgumentOutOfRangeException("rect", "The data you provided is larger than the region you are trying to upload.");
+			}
+			if (requiredBytes > dataLength)
+			{
+				throw new ArgumentOutOfRangeException("rect", "The region you are trying to upload is larger than the amount of data you provided.");
+			}
+#endif
 
 			FNA3D.FNA3D_SetTextureData2D(
 				GraphicsDevice.GLDevice,

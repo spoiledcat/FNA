@@ -120,7 +120,7 @@ namespace Microsoft.Xna.Framework
 			 * See the CoreCLR source for more info.
 			 * -flibit
 			 */
-#if NETSTANDARD2_0
+#if NETSTANDARD2_0_OR_GREATER || NET6_0_OR_GREATER
 			/* Modern C# lets you just send the byte*, nice! */
 			string result = System.Text.Encoding.UTF8.GetString(
 				(byte*) s,
