@@ -97,10 +97,6 @@ namespace Microsoft.Xna.Framework.Audio
 				{
 					throw new ObjectDisposedException(GetType().Name, "This object has already been disposed.");
 				}
-				if (value < -1f || value > 1f)
-				{
-					throw new ArgumentOutOfRangeException("value");
-				}
 				INTERNAL_pitch = MathHelper.Clamp(value, -1.0f, 1.0f);
 				if (handle != IntPtr.Zero)
 				{
