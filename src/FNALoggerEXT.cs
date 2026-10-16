@@ -11,6 +11,8 @@
 using Microsoft.Xna.Framework.Graphics;
 
 using System;
+using System.Runtime.InteropServices;
+
 #endregion
 
 namespace Microsoft.Xna.Framework
@@ -36,6 +38,13 @@ namespace Microsoft.Xna.Framework
 		private static FNA3D.FNA3D_LogFunc LogWarnFunc = FNA3DLogWarn;
 		private static FNA3D.FNA3D_LogFunc LogErrorFunc = FNA3DLogError;
 
+		[DllImport("FNA3D", CallingConvention = CallingConvention.Cdecl)]
+		static extern void FNA3D_Default_LogInfo([MarshalAs(UnmanagedType.LPStr)] string msg);
+		[DllImport("FNA3D", CallingConvention = CallingConvention.Cdecl)]
+		static extern void FNA3D_Default_LogWarn([MarshalAs(UnmanagedType.LPStr)] string msg);
+		[DllImport("FNA3D", CallingConvention = CallingConvention.Cdecl)]
+		static extern void FNA3D_Default_LogError([MarshalAs(UnmanagedType.LPStr)] string msg);
+
 		#endregion
 
 		#region Internal Static Functions
@@ -45,15 +54,15 @@ namespace Microsoft.Xna.Framework
 			/* Don't overwrite application log hooks! */
 			if (FNALoggerEXT.LogInfo == null)
 			{
-				FNALoggerEXT.LogInfo = Console.WriteLine;
+				FNALoggerEXT.LogInfo = FNA3D_Default_LogInfo;
 			}
 			if (FNALoggerEXT.LogWarn == null)
 			{
-				FNALoggerEXT.LogWarn = Console.WriteLine;
+				FNALoggerEXT.LogWarn = FNA3D_Default_LogWarn;
 			}
 			if (FNALoggerEXT.LogError == null)
 			{
-				FNALoggerEXT.LogError = Console.WriteLine;
+				FNALoggerEXT.LogError = FNA3D_Default_LogError;
 			}
 		}
 
