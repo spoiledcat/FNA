@@ -542,6 +542,20 @@ namespace Microsoft.Xna.Framework
 
 		#region IGraphicsDeviceManager Methods
 
+		private bool suspended;
+		void IGraphicsDeviceManager.Suspend()
+		{
+			FNA3D.FNA3D_SuspendGPU(graphicsDevice.GLDevice);
+			SDL3.SDL.SDL_GDKSuspendComplete();
+			suspended = true;
+		}
+
+		void IGraphicsDeviceManager.Resume()
+		{
+			FNA3D.FNA3D_ResumeGPU(GraphicsDevice.GLDevice);
+			suspended = false;
+		}
+
 		void IGraphicsDeviceManager.CreateDevice()
 		{
 			// This function can recreate the device from scratch!
@@ -590,7 +604,7 @@ namespace Microsoft.Xna.Framework
 
 		bool IGraphicsDeviceManager.BeginDraw()
 		{
-			if (graphicsDevice == null)
+			if (graphicsDevice == null || suspended)
 			{
 				return false;
 			}

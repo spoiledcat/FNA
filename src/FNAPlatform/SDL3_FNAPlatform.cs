@@ -1209,6 +1209,28 @@ namespace Microsoft.Xna.Framework
 					game.RunApplication = false;
 					break;
 				}
+
+				else if (evt.type == (uint) SDL.SDL_EventType.SDL_EVENT_USER)
+				{
+					if (evt.user.code == 7331)
+					{
+						Object manager = game.Services.GetService(typeof(IGraphicsDeviceManager));
+						if (manager is IGraphicsDeviceManager m)
+						{
+							m.Suspend();
+						}
+						break;
+					}
+					else if (evt.user.code == 1337)
+					{
+						Object manager = game.Services.GetService(typeof(IGraphicsDeviceManager));
+						if (manager is IGraphicsDeviceManager m)
+						{
+							m.Resume();
+						}
+						break;
+					}
+				}
 			}
 		}
 
@@ -1243,7 +1265,7 @@ namespace Microsoft.Xna.Framework
 			}
 		}
 
-		#endregion
+#endregion
 
 		#region Emscripten Main Loop
 

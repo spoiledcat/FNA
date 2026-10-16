@@ -18,5 +18,8 @@ namespace Microsoft.Xna.Framework
 		bool BeginDraw();
 		void CreateDevice();
 		void EndDraw();
+
+		void Suspend();
+		void Resume();
 	}
 }

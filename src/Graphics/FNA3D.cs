@@ -196,6 +196,11 @@ namespace Microsoft.Xna.Framework.Graphics
 		#region Presentation
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void FNA3D_SuspendGPU(IntPtr device);
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void FNA3D_ResumeGPU(IntPtr device);
+
+		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void FNA3D_SwapBuffers(
 			IntPtr device,
 			ref Rectangle sourceRectangle,
